@@ -6,13 +6,16 @@ var video;
 //Sets our tracking object
 var tracker;
 
-var attackLevel = 1.0;
+var delay, delay2;
+var attackLevel = 0.8;
 var releaseLevel = 0;
 
-var attackTime = 0.001
-var decayTime = 0.2;
+var attackTime = 0.011;
+var decayTime = 0.02;
 var susPercent = 0.2;
-var releaseTime = 0.5;
+var releaseTime = 0.1;
+
+
 
 
 //Set the color to track, the video is clicked.
@@ -38,6 +41,10 @@ function setup() {
  // video.hide();
   video.loop();
   
+  delay = new p5.Delay();
+  delay2 = new p5.Delay();
+
+  
   env = new p5.Env();
   env.setADSR(attackTime, decayTime, susPercent, releaseTime);
   env.setRange(attackLevel, releaseLevel);
@@ -53,6 +60,12 @@ function setup() {
   osc2.freq(240);
   osc2.amp(env);
   osc2.start();
+  
+  delay.setType('pingPong');
+  delay.process(osc1, .5, .9, 1300);
+  delay2.setType('pingPong');
+  delay2.process(osc2, .9, .9, 4300);
+
 
   
   // capture.hide(); // tracking.js can't track the video when it's hidden
@@ -68,7 +81,7 @@ function setup() {
   });
   tracker = new tracking.ColorTracker(['match']);
   tracker.minDimension = 10;
-  tracker.maxDimension = 20;// make this smaller to track smaller objects
+  tracker.maxDimension = 30;// make this smaller to track smaller objects
   video.elt.id = 'p5video';
   tracking.track('#p5video', tracker);
   tracker.on('track', function(event) {
@@ -82,7 +95,7 @@ function setup() {
       
       osc1.freq(r.x*10);
       osc1.amp(0.5, 0.005);
-      osc2.freq(r.y*10);
+      osc2.freq(r.y*4);
       osc2.amp(0.5, 0.005);
       env.play();
       
