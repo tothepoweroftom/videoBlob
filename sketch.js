@@ -101,7 +101,7 @@ function setup() {
       //rect(r.x, r.y, r.width, r.height);
       print("Detected"+" " + r.x+" " + r.y);
       
-      osc1.freq(r.x*10);
+      osc1.freq(r.x*4);
       osc1.amp(0.2, 0.05);
       osc2.freq(r.y*4);
       osc2.amp(0.2, 0.05);
