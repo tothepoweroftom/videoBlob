@@ -7,6 +7,7 @@ var video;
 var tracker;
 
 var delay, delay2;
+var filtera;
 var attackLevel = 0.8;
 var releaseLevel = 0;
 
@@ -41,6 +42,9 @@ function setup() {
  // video.hide();
   video.loop();
   
+  filtera = new p5.BandPass();
+
+  
   delay = new p5.Delay();
   delay2 = new p5.Delay();
   
@@ -56,6 +60,8 @@ function setup() {
   osc1.freq(240);
   osc1.amp(env);
   osc1.start();
+  osc1.disconnect();
+  osc1.connect(filtera)
   
     osc2 = new p5.SqrOsc()
   // osc.setType('saw');
@@ -114,6 +120,9 @@ function draw() {
     setTarget(target[0], target[1], target[2]);
     video.loop();
   }
+  
+  var freq = map(mouseX, 0, width, 20, 10000);
+  filter.freq(freq);
 }
 
 function playEnv(){
