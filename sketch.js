@@ -43,6 +43,8 @@ function setup() {
   
   delay = new p5.Delay();
   delay2 = new p5.Delay();
+  
+  masterVolume(0.2);
 
   
   env = new p5.Env();
@@ -62,9 +64,9 @@ function setup() {
   osc2.start();
   
   delay.setType('pingPong');
-  delay.process(osc1, .5, .9, 1300);
+  delay.process(osc1, .5, .5, 1300);
   delay2.setType('pingPong');
-  delay2.process(osc2, .9, .9, 4300);
+  delay2.process(osc2, .9, .5, 4300);
 
 
   
@@ -94,9 +96,9 @@ function setup() {
       print("Detected"+" " + r.x+" " + r.y);
       
       osc1.freq(r.x*10);
-      osc1.amp(0.5, 0.005);
+      osc1.amp(0.2, 0.05);
       osc2.freq(r.y*4);
-      osc2.amp(0.5, 0.005);
+      osc2.amp(0.2, 0.05);
       env.play();
       
     })
