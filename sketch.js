@@ -97,8 +97,8 @@ function setup() {
     return false;
   });
   tracker = new tracking.ColorTracker(['match']);
-  tracker.minDimension = 10;
-  tracker.maxDimension = 30;// make this smaller to track smaller objects
+  tracker.minDimension = 7;
+  tracker.maxDimension = 100;// make this smaller to track smaller objects
   video.elt.id = 'p5video';
   tracking.track('#p5video', tracker);
   tracker.on('track', function(event) {
@@ -107,11 +107,12 @@ function setup() {
     // stroke(255, 0, 0);
     // noFill();
     event.data.forEach(function(r) {
-      //rect(r.x, r.y, r.width, r.height);
-      print("Detected"+" " + r.x+" " + r.y);
+      // fill(0,255,10);
+      // point(r.x,r.y);
+     // print("Detected"+" " + r.x+" " + r.y);
       
-      osc1.freq(r.x%5 * 60);
-      osc2.freq(r.x%5 * 120);
+      osc1.freq(r.x%10 * 60);
+      osc2.freq(r.x%10 * 120);
 
       env.play();
       
@@ -120,7 +121,7 @@ function setup() {
 }
 
 function draw() {
-    stroke(0);
+  stroke(0);
   text("Filter Freq", 35, 580,50,20 );
   var val = slider.value();
   // set filter parameters
