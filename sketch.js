@@ -75,19 +75,19 @@ function setup() {
   osc1.connect(filtera);
   osc1.start();
   
-  osc2 = new p5.SqrOsc()
+  osc2 = new p5.SinOsc()
   // osc.setType('saw');
   osc2.freq(240);
   osc2.amp(env);
 
   osc2.disconnect();
-  osc2.connect(filtera);
+ // osc2.connect(filtera);
   osc2.start();
   
   delay.setType('pingPong');
   delay.process(osc1, .5, .5, 1300);
-  delay2.setType('pingPong');
-  delay2.process(osc2, .9, .5, 300);
+ // delay2.setType('pingPong');
+//  delay2.process(osc2, .9, .5, 300);
   
   filtera.disconnect();
   reverb.process(filtera,5,1);
