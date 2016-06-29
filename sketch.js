@@ -12,13 +12,13 @@ var slider;
 
 var delay, delay2;
 var filtera;
-var attackLevel = 1.0;
+var attackLevel = 0.6;
 var releaseLevel = 0;
 
-var attackTime = 0.001;
-var decayTime = 0.1;
-var susPercent = 0.5;
-var releaseTime = 0.001;
+var attackTime = 0.1;
+var decayTime = 0.01;
+var susPercent = 0.01;
+var releaseTime = 0.01;
 
 
 
@@ -27,7 +27,7 @@ var releaseTime = 0.001;
 var rhi, ghi, bhi;
 var rlo, glo, blo;
 function setTarget(r, g, b, range) {
-  range = range || 10;
+  range = range || 20;
   rhi = r + range, rlo = r - range;
   ghi = g + range, glo = g - range;
   bhi = b + range, blo = b - range;
@@ -53,13 +53,13 @@ function setup() {
   video.loop();
   
   filtera = new p5.LowPass();
-  filtera.set(2800,10);
+  filtera.set(15000,10);
 
   
   delay = new p5.Delay();
   delay2 = new p5.Delay();
   
-  masterVolume(0.2);
+  masterVolume(0.3);
 
   
   env = new p5.Env();
@@ -90,7 +90,7 @@ function setup() {
   delay2.process(osc2, .9, .5, 300);
   
   filtera.disconnect();
-  reverb.process(filtera,5,10);
+  reverb.process(filtera,5,1);
 
 
   
@@ -106,8 +106,8 @@ function setup() {
     return false;
   });
   tracker = new tracking.ColorTracker(['match']);
-  tracker.minDimension = 7;
-  tracker.maxDimension = 100;// make this smaller to track smaller objects
+  tracker.minDimension = 5;
+  tracker.maxDimension = 50;// make this smaller to track smaller objects
   video.elt.id = 'p5video';
   tracking.track('#p5video', tracker);
   tracker.on('track', function(event) {
