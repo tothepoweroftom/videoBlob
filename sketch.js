@@ -121,7 +121,8 @@ function setup() {
      // print("Detected"+" " + r.x+" " + r.y);
       
       osc1.freq(r.x * 4);
-      osc2.freq(r.x * 8);
+      osc2.freq(r.x);
+      osc1.freq(osc2);
 
       env.play();
       
