@@ -16,8 +16,8 @@ var attackLevel = 0.6;
 var releaseLevel = 0;
 
 var attackTime = 0.1;
-var decayTime = 0.01;
-var susPercent = 0.01;
+var decayTime = 0.1;
+var susPercent = 0.2;
 var releaseTime = 0.01;
 
 
@@ -107,7 +107,7 @@ function setup() {
   });
   tracker = new tracking.ColorTracker(['match']);
   tracker.minDimension = 5;
-  tracker.maxDimension = 50;// make this smaller to track smaller objects
+  tracker.maxDimension = 200;// make this smaller to track smaller objects
   video.elt.id = 'p5video';
   tracking.track('#p5video', tracker);
   tracker.on('track', function(event) {
