@@ -53,7 +53,7 @@ function setup() {
   video.loop();
   
   filtera = new p5.LowPass();
-  filtera.set(15000,10);
+  filtera.set(3000,10);
 
   
   delay = new p5.Delay();
@@ -120,7 +120,7 @@ function setup() {
       // point(r.x,r.y);
      // print("Detected"+" " + r.x+" " + r.y);
       
-      osc1.freq(r.x * 4);
+      osc1.freq(r.x%10 * 100);
       osc2.freq(r.x);
       osc1.freq(osc2);
 
