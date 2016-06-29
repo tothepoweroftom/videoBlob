@@ -36,8 +36,9 @@ function setup() {
   var w = 640, h = 360;
   cnv = createCanvas(w, h);
   cnv.parent('container');
+
   slider = createSlider(0,10000,500,200);
-  slider.position(10, 10);
+  slider.position(40, 600);
 
   video = createVideo(['assets/cloudchamberContrast.mov']);
 
@@ -66,16 +67,16 @@ function setup() {
 
   osc1.disconnect();
   osc1.connect(filtera);
-    osc1.start();
+  osc1.start();
   
-    osc2 = new p5.SqrOsc()
+  osc2 = new p5.SqrOsc()
   // osc.setType('saw');
   osc2.freq(240);
   osc2.amp(env);
 
-  osc1.disconnect();
-  osc1.connect(filtera);
-    osc2.start();
+  osc2.disconnect();
+  osc2.connect(filtera);
+  osc2.start();
   
   delay.setType('pingPong');
   delay.process(osc1, .5, .5, 1300);
@@ -109,8 +110,8 @@ function setup() {
       //rect(r.x, r.y, r.width, r.height);
       print("Detected"+" " + r.x+" " + r.y);
       
-      osc1.freq(r.x*2);
-      osc2.freq(r.x*4);
+      osc1.freq(r.x%5 * 60);
+      osc2.freq(r.x%5 * 120);
 
       env.play();
       
@@ -119,10 +120,13 @@ function setup() {
 }
 
 function draw() {
-  
+    stroke(0);
+  text("Filter Freq", 35, 580,50,20 );
   var val = slider.value();
-  filtera.freq(val);
-  filter.res(50);
+  // set filter parameters
+  filtera.set(val, 20);
+  
+
   
   if(mouseIsPressed &&
     mouseX > 0 && mouseX < width &&
