@@ -63,17 +63,19 @@ function setup() {
   // osc.setType('saw');
   osc1.freq(240);
   osc1.amp(env);
-  osc1.start();
+
   osc1.disconnect();
-  osc1.connect(filtera)
+  osc1.connect(filtera);
+    osc1.start();
   
     osc2 = new p5.SqrOsc()
   // osc.setType('saw');
   osc2.freq(240);
   osc2.amp(env);
-  osc2.start();
+
   osc1.disconnect();
-  osc1.connect(filtera)
+  osc1.connect(filtera);
+    osc2.start();
   
   delay.setType('pingPong');
   delay.process(osc1, .5, .5, 1300);
@@ -120,6 +122,7 @@ function draw() {
   
   var val = slider.value();
   filtera.freq(val);
+  filter.res(50);
   
   if(mouseIsPressed &&
     mouseX > 0 && mouseX < width &&
