@@ -89,7 +89,7 @@ function setup() {
  // delay2.setType('pingPong');
 //  delay2.process(osc2, .9, .5, 300);
   
-  filtera.disconnect();
+ // filtera.disconnect();
   reverb.process(filtera,5,1);
 
 
