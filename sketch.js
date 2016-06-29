@@ -2,6 +2,8 @@
 //Sets the webcam feed
 var video;
 
+var reverb;
+
 
 //Sets our tracking object
 var tracker;
@@ -13,10 +15,10 @@ var filtera;
 var attackLevel = 1.0;
 var releaseLevel = 0;
 
-var attackTime = 0.1;
-var decayTime = 0.05;
-var susPercent = 0.1;
-var releaseTime = 0.1;
+var attackTime = 0.001;
+var decayTime = 0.1;
+var susPercent = 0.5;
+var releaseTime = 0.001;
 
 
 
@@ -36,9 +38,12 @@ function setup() {
   var w = 640, h = 360;
   cnv = createCanvas(w, h);
   cnv.parent('container');
+  
+  reverb = new p5.Reverb();
 
-  slider = createSlider(0,10000,500,200);
-  slider.position(40, 600);
+
+  // slider = createSlider(0,10000,500,200);
+  // slider.position(40, 600);
 
   video = createVideo(['assets/cloudchamberContrast.mov']);
 
@@ -48,6 +53,7 @@ function setup() {
   video.loop();
   
   filtera = new p5.LowPass();
+  filtera.set(2800,10);
 
   
   delay = new p5.Delay();
@@ -82,6 +88,9 @@ function setup() {
   delay.process(osc1, .5, .5, 1300);
   delay2.setType('pingPong');
   delay2.process(osc2, .9, .5, 300);
+  
+  filtera.disconnect();
+  reverb.process(filtera,5,10);
 
 
   
@@ -111,8 +120,8 @@ function setup() {
       // point(r.x,r.y);
      // print("Detected"+" " + r.x+" " + r.y);
       
-      osc1.freq(r.x%10 * 60);
-      osc2.freq(r.x%10 * 120);
+      osc1.freq(r.x%12 * 60);
+      osc2.freq(r.x%12 * 120);
 
       env.play();
       
@@ -121,11 +130,11 @@ function setup() {
 }
 
 function draw() {
-  stroke(0);
-  text("Filter Freq", 35, 580,50,20 );
-  var val = slider.value();
-  // set filter parameters
-  filtera.set(val, 20);
+  // stroke(0);
+  // text("Filter Freq", 35, 580,50,20 );
+  // var val = slider.value();
+  // // set filter parameters
+  // filtera.set(val, 20);
   
 
   
