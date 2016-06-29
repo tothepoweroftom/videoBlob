@@ -6,14 +6,16 @@ var video;
 //Sets our tracking object
 var tracker;
 
+var slider;
+
 var delay, delay2;
 var filtera;
-var attackLevel = 0.8;
+var attackLevel = 1.0;
 var releaseLevel = 0;
 
-var attackTime = 0.011;
-var decayTime = 0.02;
-var susPercent = 0.2;
+var attackTime = 0.1;
+var decayTime = 0.05;
+var susPercent = 0.1;
 var releaseTime = 0.1;
 
 
@@ -34,6 +36,8 @@ function setup() {
   var w = 640, h = 360;
   cnv = createCanvas(w, h);
   cnv.parent('container');
+  slider = createSlider(0,10000,500,200);
+  slider.position(10, 10);
 
   video = createVideo(['assets/cloudchamberContrast.mov']);
 
@@ -42,7 +46,7 @@ function setup() {
  // video.hide();
   video.loop();
   
-  filtera = new p5.BandPass();
+  filtera = new p5.LowPass();
 
   
   delay = new p5.Delay();
@@ -68,11 +72,13 @@ function setup() {
   osc2.freq(240);
   osc2.amp(env);
   osc2.start();
+  osc1.disconnect();
+  osc1.connect(filtera)
   
   delay.setType('pingPong');
   delay.process(osc1, .5, .5, 1300);
   delay2.setType('pingPong');
-  delay2.process(osc2, .9, .5, 4300);
+  delay2.process(osc2, .9, .5, 300);
 
 
   
@@ -101,10 +107,9 @@ function setup() {
       //rect(r.x, r.y, r.width, r.height);
       print("Detected"+" " + r.x+" " + r.y);
       
-      osc1.freq(r.x*4);
-      osc1.amp(0.2, 0.05);
-      osc2.freq(r.y*4);
-      osc2.amp(0.2, 0.05);
+      osc1.freq(r.x*2);
+      osc2.freq(r.x*4);
+
       env.play();
       
     })
@@ -112,6 +117,10 @@ function setup() {
 }
 
 function draw() {
+  
+  var val = slider.value();
+  filtera.freq(val);
+  
   if(mouseIsPressed &&
     mouseX > 0 && mouseX < width &&
     mouseY > 0 && mouseY < height) {
@@ -120,9 +129,7 @@ function draw() {
     setTarget(target[0], target[1], target[2]);
     video.loop();
   }
-  
-  var freq = map(mouseX, 0, width, 20, 10000);
-  filter.freq(freq);
+
 }
 
 function playEnv(){
