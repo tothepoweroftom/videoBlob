@@ -120,8 +120,8 @@ function setup() {
       // point(r.x,r.y);
      // print("Detected"+" " + r.x+" " + r.y);
       
-      osc1.freq(r.x%12 * 60);
-      osc2.freq(r.x%12 * 120);
+      osc1.freq(r.x * 4);
+      osc2.freq(r.x * 8);
 
       env.play();
       
